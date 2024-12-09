@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /*
 Module Name: Timesheet Attendance Management
 Description: An complete attendance management system application with timesheet mostly work with attendance, leave, holiday and shift
-Version: 1.1.8
+Version: 1.1.7
 Requires at least: 2.3.*
 Author: GreenTech Solutions
 Author URI: https://codecanyon.net/user/greentech_solutions
@@ -17,7 +17,7 @@ define('TIMESHEETS_CONTRACT_ATTACHMENTS_UPLOAD_FOLDER', module_dir_path(TIMESHEE
 define('TIMESHEETS_JOB_POSIITON_ATTACHMENTS_UPLOAD_FOLDER', module_dir_path(TIMESHEETS_MODULE_NAME, 'uploads/job_position/'));
 define('TIMESHEETS_PATH', 'modules/timesheets/uploads/');
 define('TIMESHEETS_PAYSLIPS', 'modules/timesheets/uploads/payslips/');
-define('TIMESHEETS_REVISION', 118);
+define('TIMESHEETS_REVISION', 117);
 
 define('PAY_SLIP', FCPATH);
 
@@ -611,7 +611,7 @@ function auto_notification_of_approval_expiration() {
 }
 
 function timesheets_appint(){
-    /*$CI = & get_instance();
+    $CI = & get_instance();    
     require_once 'libraries/gtsslib.php';
     $timesheets_api = new TimesheetLic();
     $timesheets_gtssres = $timesheets_api->verify_license(true);    
@@ -619,24 +619,15 @@ function timesheets_appint(){
          $CI->app_modules->deactivate(TIMESHEETS_MODULE_NAME);
         set_alert('danger', "One of your modules failed its verification and got deactivated. Please reactivate or contact support.");
         redirect(admin_url('modules'));
-    }*/
+    }    
 }
 function timesheets_preactivate($module_name){
-    /*if ($module_name['system_name'] == TIMESHEETS_MODULE_NAME) {
+    if ($module_name['system_name'] == TIMESHEETS_MODULE_NAME) {             
         require_once 'libraries/gtsslib.php';
         $timesheets_api = new TimesheetLic();
         $timesheets_gtssres = $timesheets_api->verify_license();          
         if(!$timesheets_gtssres || ($timesheets_gtssres && isset($timesheets_gtssres['status']) && !$timesheets_gtssres['status'])){
-            $CI = & get_instance();
-            if (!$CI->db->table_exists(db_prefix() . 'timesheets_option')) {
-				$CI->db->query('CREATE TABLE `' . db_prefix() . "timesheets_option` (
-			        `option_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-			        `option_name` varchar(200) NOT NULL,
-			        `option_val` longtext NULL,
-			        `auto` tinyint(1) NULL,
-			        PRIMARY KEY (`option_id`)
-			    ) ENGINE=InnoDB DEFAULT CHARSET=" . $CI->db->char_set . ';');
-			}
+             $CI = & get_instance();
             $data['submit_url'] = $module_name['system_name'].'/gtsverify/activate'; 
             $data['original_url'] = admin_url('modules/activate/'.TIMESHEETS_MODULE_NAME); 
             $data['module_name'] = TIMESHEETS_MODULE_NAME; 
@@ -644,7 +635,7 @@ function timesheets_preactivate($module_name){
             echo $CI->load->view($module_name['system_name'].'/activate', $data, true);
             exit();
         }        
-    }*/
+    }
 }
 function timesheets_predeactivate($module_name){
     if ($module_name['system_name'] == TIMESHEETS_MODULE_NAME) {
