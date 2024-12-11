@@ -1,4 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');?>
+<script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" rel="stylesheet">
+
 <div>
 	<?php echo form_open(admin_url('timesheets/default_settings'),array('id'=>'default_settings-form')); ?>
 	<div class="col-md-12">
@@ -32,19 +35,6 @@
 		if($data_by_route){
 			$allow_attendance_by_route = $data_by_route;
 		}
-
-		$send_email_check_in_out_customer_location = 0;
-		$data_send_email_check_in_out = get_timesheets_option('send_email_check_in_out_customer_location');
-		if($data_send_email_check_in_out){
-			$send_email_check_in_out_customer_location = $data_send_email_check_in_out;
-		}
-
-		$allow_employees_to_create_work_points = 0;
-		$data_allow_create_work_point = get_timesheets_option('allow_employees_to_create_work_points');
-		if($data_allow_create_work_point){
-			$allow_employees_to_create_work_points = $data_allow_create_work_point;
-		}
-
 		$auto_checkout = 0;
 		$data_auto_checkout = get_timesheets_option('auto_checkout');
 		if($data_auto_checkout){
@@ -124,7 +114,7 @@
 						<label><?php echo _l('allow_attendance_by_route'); ?></label>
 					</div>
 				</div>
-			</div>			
+			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="checkbox">							
@@ -166,7 +156,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12 auto_send_notification_if_check_in_forgotten <?php if($send_notification_if_check_in_forgotten == 0){ echo "hide"; } ?>">
-							<div class="col-md-12 x_value">
+							<div class="col-md-2 x_value">
 								<div class="form-group">
 									<label for="gst"><?php echo _l('after'); ?></label>					 	
 									<div class="input-group">
@@ -176,22 +166,6 @@
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="checkbox">							
-						<input type="checkbox" class="capability" name="send_email_check_in_out_customer_location" value="1" <?php if($send_email_check_in_out_customer_location == 1){ echo "checked"; } ?>>
-						<label><?php echo _l('send_email_to_customer_when_staff_check_in_out_at_customer_location'); ?></label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="checkbox">							
-						<input type="checkbox" class="capability" name="allow_employees_to_create_work_points" value="1" <?php if($allow_employees_to_create_work_points == 1){ echo "checked"; } ?>>
-						<label><?php echo _l('allow_employees_to_create_work_points'); ?></label>
 					</div>
 				</div>
 			</div>
@@ -215,65 +189,8 @@
 				</div>
 			</div>
 		</div>
-
-		<br>
-		<h4>
-			<?php echo _l('manage_leave'); ?>
-		</h4>
-		<hr>
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-md-12">
-					<?php
-					$start_month_for_annual_leave_cycle = '1';
-					$start_month = get_timesheets_option('start_month_for_annual_leave_cycle');
-					if($start_month){
-						$start_month_for_annual_leave_cycle = $start_month;
-					}	
-
-					$month = [
-						1 => ['id' => '1', 'name' => _l('January')],
-						2 => ['id' => '2', 'name' => _l('February')],
-						3 => ['id' => '3', 'name' => _l('March')],
-						4 => ['id' => '4', 'name' => _l('April')],
-						5 => ['id' => '5', 'name' => _l('May')],
-						6 => ['id' => '6', 'name' => _l('June')],
-						7 => ['id' => '7', 'name' => _l('July')],
-						8 => ['id' => '8', 'name' => _l('August')],
-						9 => ['id' => '9', 'name' => _l('September')],
-						10 => ['id' => '10', 'name' => _l('October')],
-						11 => ['id' => '11', 'name' => _l('November')],
-						12 => ['id' => '12', 'name' => _l('December')],
-					];
-					echo render_select('start_month_for_annual_leave_cycle', $month, array('id', 'name'), 'ts_start_month_for_annual_leave_cycle', $start_month_for_annual_leave_cycle, array(), array(), '', '', false); 
-					?>
-				</div>
-			</div>
-		</div>
-
-		<br>
-		<h4>
-			<?php echo _l('ts_cron_job'); ?>
-		</h4>
-		<hr>
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-md-12">
-					<?php
-					$hour_notification_approval_exp = '3';
-					$start_month = get_timesheets_option('hour_notification_approval_exp');
-					if($start_month){
-						$hour_notification_approval_exp = $start_month;
-					}	
-					echo render_input('hour_notification_approval_exp', 'ts_hour_automatic_to_send_notification_of_approval_expiration', $hour_notification_approval_exp, 'number', array('required' => 'required')); 
-					?>
-				</div>
-			</div>
-		</div>
-
-		<hr>
-
 	</div>
+	<div class="clearfix"></div>
 	<br>
 	<div class="clearfix"></div>
 

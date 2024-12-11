@@ -27,10 +27,13 @@
         newattachment.find('button[name="add"]').removeClass('new_vendor_requests').addClass('remove_vendor_requests').removeClass('btn-success').addClass('btn-danger');
 
         $('select[name="approver[' + addMoreVendorsInputKey + ']"]').change(function(){
+          console.log('a');
             if($(this).val() == 'specific_personnel'){
+          console.log('1');
 
               $('#is_staff_' + $(this).attr('data-id')).removeClass('hide');
             }else{
+          console.log('2');
 
               $('#is_staff_' + $(this).attr('data-id')).addClass('hide');
             }
@@ -41,14 +44,10 @@
     $("body").on('click', '.remove_vendor_requests', function() {
         $(this).parents('#item_approve').remove();
     });
-    <?php
-
-     if(isset($approval_setting)){ 
+    <?php if(isset($approval_setting)){ 
        $i = 0;
       ?>
-      <?php
-      $setting = json_decode($approval_setting->setting);
-       foreach ($setting as $key => $value): ?>
+      <?php foreach ($setting as $key => $value): ?>
           $('select[name="approver[<?php echo html_entity_decode($i); ?>]"]').change(function(){
           if($(this).val() == 'specific_personnel'){
             $('#is_staff_<?php echo html_entity_decode($i); ?>').removeClass('hide');
@@ -68,7 +67,6 @@
           }
         });
     <?php } ?>
-
     $('#choose_when_approving').click(function(){
       if($(this).is(':checked')){
           $('.list_approve').addClass('hide');
